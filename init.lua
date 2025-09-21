@@ -9,6 +9,8 @@ vim.schedule(function()
   vim.o.clipboard = 'unnamedplus'
 end)
 vim.o.breakindent = true
+vim.o.wrap = true
+vim.o.linebreak = true
 vim.o.undofile = true
 vim.o.ignorecase = true
 vim.o.smartcase = true
@@ -78,3 +80,18 @@ require('lazy').setup({
     },
   },
 })
+
+-- Fix for vim.fs.joinpath issue
+local original_joinpath = vim.fs.joinpath
+vim.fs.joinpath = function(...)
+  local args = { ... }
+  local filtered = {}
+
+  for _, arg in ipairs(args) do
+    if type(arg) == 'string' then
+      table.insert(filtered, arg)
+    end
+  end
+
+  return original_joinpath(unpack(filtered))
+end
