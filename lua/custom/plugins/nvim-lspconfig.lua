@@ -109,7 +109,18 @@ return {
     local servers = {
       clangd = {},
       gopls = {},
-      pyright = {},
+      pyright = {
+        settings = {
+          pyright = {
+            disableOrganizeImports = true,
+          },
+          python = {
+            analysis = {
+              ignore = { '*' },
+            },
+          },
+        },
+      },
       rust_analyzer = {},
       ts_ls = {},
       emmet_language_server = {},
@@ -142,6 +153,7 @@ return {
     vim.list_extend(ensure_installed, {
       'stylua', -- Used to format Lua code
       'typstyle',
+      'ruff',
     })
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
