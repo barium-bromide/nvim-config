@@ -74,6 +74,16 @@ return {
             vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
           end, '[T]oggle Inlay [H]ints')
         end
+
+        if client:supports_method(vim.lsp.protocol.Methods.textDocument_inlineCompletion) then
+          vim.o.completeopt = { 'menu', 'menuone', 'noinsert', 'fuzzy', 'popup' }
+          vim.lsp.inline_completion.enable(true)
+          vim.keymap.set('i', '<Tab>', function()
+            if not vim.lsp.inline_completion.get() then
+              return '<Tab>'
+            end
+          end, { expr = true, replace_keycodes = true, desc = 'Get the current inline completion' })
+        end
       end,
     })
 
@@ -106,6 +116,9 @@ return {
 
     local capabilities = require('blink.cmp').get_lsp_capabilities()
 
+    ---@class LspServersConfig
+    ---@field mason table<string, vim.lsp.Config>
+    ---@field others table<string, vim.lsp.Config>
     local servers = {
       clangd = {},
       gopls = {},
@@ -168,6 +181,7 @@ return {
           -- certain features of an LSP (for example, turning off formatting for ts_ls)
           server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
           require('lspconfig')[server_name].setup(server)
+          -- vim.lsp.config[server_name] = server
         end,
       },
     }
