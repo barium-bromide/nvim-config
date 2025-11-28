@@ -30,16 +30,23 @@ return { -- Autocompletion
   --- @module 'blink.cmp'
   --- @type blink.cmp.Config
   opts = {
-    keymap = {
-      preset = 'default',
-    },
-
     appearance = {
       nerd_font_variant = 'mono',
     },
 
     completion = {
-      documentation = { auto_show = false, auto_show_delay_ms = 500 },
+      menu = {
+        min_width = 15,
+        max_height = 12,
+        border = 'rounded',
+      },
+      documentation = {
+        auto_show = false,
+        auto_show_delay_ms = 500,
+        window = {
+          border = 'rounded',
+        },
+      },
     },
 
     sources = {
@@ -51,6 +58,9 @@ return { -- Autocompletion
 
     snippets = { preset = 'luasnip' },
     fuzzy = { implementation = 'prefer_rust_with_warning' },
-    signature = { enabled = true },
+    signature = {
+      enabled = true,
+      window = { border = 'single' },
+    },
   },
 }

@@ -1,11 +1,17 @@
 return { -- Highlight, edit, and navigate code
   'nvim-treesitter/nvim-treesitter',
   build = ':TSUpdate',
+  event = { 'BufReadPre', 'BufNewFile' },
+  dependencies = {
+    'nvim-tresitter/nvim-treesitter-textobjects',
+  },
   main = 'nvim-treesitter.configs',
   opts = {
     ensure_installed = {
       'bash',
       'c',
+      'rust',
+      'zig',
       'diff',
       'html',
       'lua',
