@@ -70,7 +70,7 @@ return {
       icon_hl = 'SnacksInputIcon',
       icon_pos = 'left',
       prompt_pos = 'title',
-      win = { style = 'input' },
+      win = { style = { position = 'float', relative = 'cursor' } },
       expand = true,
     },
     notifier = {
@@ -267,6 +267,13 @@ return {
         Snacks.picker.lsp_definitions()
       end,
       desc = '[G]oto [D]efinition',
+    },
+    {
+      'grD',
+      function()
+        Snacks.picker.lsp_declarations()
+      end,
+      desc = '[G]oto [D]eclaration',
     },
     {
       'gO',
